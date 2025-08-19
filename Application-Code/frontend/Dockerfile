@@ -1,6 +1,19 @@
 FROM node:14
-WORKDIR /usr/src/app
+
+WORKDIR /app
+
 COPY package*.json ./
-RUN npm install
+
+RUN npm install --only=production
+
+# Install 'serve' globally (for serving static files)
+RUN npm install -g serve
+
 COPY . .
-CMD [ "npm", "start" ]
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["serve", "-s", "build", "-l", "3000"]
+

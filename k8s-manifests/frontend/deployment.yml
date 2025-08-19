@@ -5,9 +5,9 @@ metadata:
   namespace: three-tier
   labels:
     role: frontend
-    env: demo
+    
 spec: 
-  replicas: 1
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -21,14 +21,9 @@ spec:
       labels:
         role: frontend
     spec: 
-      imagePullSecrets:
-      - name: ecr-registry-secret
       containers:
       - name: frontend
-        image: 407622020962.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
+        image: abhimaske/frontend-image:latest
         imagePullPolicy: Always
-        env:
-          - name: REACT_APP_BACKEND_URL
-            value: "http://backend.amanpathakdevops.study/api/tasks"
         ports:
         - containerPort: 3000
